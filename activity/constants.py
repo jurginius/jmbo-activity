@@ -1,3 +1,5 @@
+from django.utils.translation import ugettext_lazy as _
+
 
 ACTIVITY_SIGNED_UP = 0
 ACTIVITY_LOGGED_IN = 1
@@ -18,20 +20,20 @@ ACTIVITY_SENT_MESSAGE = 15
 ACTIVITY_SOCIAL_SHARE = 16
 
 ACTIVITY_CHOICES = (
-        (ACTIVITY_SIGNED_UP, 'Signed up'),
-        (ACTIVITY_LOGGED_IN, 'Logged in'),
-        (ACTIVITY_SENT_OFF_SITE_INVITE, 'Sent an off-site invite'),
-        (ACTIVITY_SENT_FRIEND_REQUEST, 'Sent friend request'),
-        (ACTIVITY_ACCEPTED_FRIEND_REQUEST, 'Accepted friend request'),
-        (ACTIVITY_ESTABLISHED_FRIENDSHIP, 'Established friendship'),
-        (ACTIVITY_DECLINED_FRIENDSHIP, 'Declined friendship'),
-        (ACTIVITY_REVOKED_FRIENDSHIP, 'Revoked friendship'),
-        (ACTIVITY_EARNED_BADGE, 'Earned badge'),
-        (ACTIVITY_POSTED, 'Posted'),
-        (ACTIVITY_UPLOADED_IMAGE, 'Uploaded Image'),
-        (ACTIVITY_COMMENTED, 'Commented'),
-        (ACTIVITY_UPDATED_AVATAR, 'Updated your avatar'),
-        (ACTIVITY_UPDATED_PROFILE, 'Updated your profile'),
-        (ACTIVITY_SENT_MESSAGE, 'Sent a message'),
-        (ACTIVITY_SOCIAL_SHARE, 'Sent a message'),
+        (ACTIVITY_SIGNED_UP, _('Signed up')),
+        (ACTIVITY_LOGGED_IN, _('Logged in')),
+        (ACTIVITY_SENT_OFF_SITE_INVITE, _('Sent an off-site invite')),
+        (ACTIVITY_SENT_FRIEND_REQUEST, _('Sent friend request')),
+        (ACTIVITY_ACCEPTED_FRIEND_REQUEST, _('Accepted friend request')),
+        (ACTIVITY_ESTABLISHED_FRIENDSHIP, _('Established friendship')),
+        (ACTIVITY_DECLINED_FRIENDSHIP, _('Declined friendship')),
+        (ACTIVITY_REVOKED_FRIENDSHIP, _('Revoked friendship')),
+        (ACTIVITY_EARNED_BADGE, _('Earned badge')),
+        (ACTIVITY_POSTED, _('Posted')),
+        (ACTIVITY_UPLOADED_IMAGE, _('Uploaded Image')),
+        (ACTIVITY_COMMENTED, _('Commented')),
+        (ACTIVITY_UPDATED_AVATAR, _('Updated your avatar')),
+        (ACTIVITY_UPDATED_PROFILE, _('Updated your profile')),
+        (ACTIVITY_SENT_MESSAGE, _('Sent a message')),
+        (ACTIVITY_SOCIAL_SHARE, _('Sent a message')),
     )
