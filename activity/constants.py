@@ -18,6 +18,7 @@ ACTIVITY_UPDATED_AVATAR = 13
 ACTIVITY_UPDATED_PROFILE = 14
 ACTIVITY_SENT_MESSAGE = 15
 ACTIVITY_SOCIAL_SHARE = 16
+ACTIVITY_POLL_VOTE = 17
 
 ACTIVITY_CHOICES = (
         (ACTIVITY_SIGNED_UP, _('Signed up')),
@@ -32,8 +33,11 @@ ACTIVITY_CHOICES = (
         (ACTIVITY_POSTED, _('Posted')),
         (ACTIVITY_UPLOADED_IMAGE, _('Uploaded Image')),
         (ACTIVITY_COMMENTED, _('Commented')),
+        (ACTIVITY_LIKED, 'Liked'),
         (ACTIVITY_UPDATED_AVATAR, _('Updated your avatar')),
         (ACTIVITY_UPDATED_PROFILE, _('Updated your profile')),
         (ACTIVITY_SENT_MESSAGE, _('Sent a message')),
         (ACTIVITY_SOCIAL_SHARE, _('Sent a message')),
+        (ACTIVITY_SOCIAL_SHARE, _('Shared via social a network')),
+        (ACTIVITY_POLL_VOTE, _('Voted in a poll')),
     )
