@@ -30,12 +30,15 @@ class MyBadges(TemplateView):
     def get_context_data(self, **kwargs):
         
         badge_groups = []
-        for activity in dict(constants.ACTIVITY_CHOICES).keys():
+        all_activities = {}
+        for app in constants.ACTIVITY_CHOICES:
+            all_activities.update(dict(app[1]))
+        for activity_id, activity_name in all_activities.iteritems():
             badge_group = BadgeGroup()
-            badge_group.title = dict(constants.ACTIVITY_CHOICES)[activity]
+            badge_group.title = activity_name
             badge_group.badges = []
 
-            for badge in models.Badge.objects.filter(activity=activity):
+            for badge in models.Badge.objects.filter(activity=activity_id):
                 if models.MemberBadge.objects.filter(member=self.request.user.member, badge=badge).count() == 1:
                     badge.is_awarded = True
                 

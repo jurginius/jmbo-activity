@@ -17,12 +17,15 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Get the latest activities - we assume the site is busy, so we'll only look at the new ones.
         latest_activities = models.UserActivity.objects.filter(checked_for_badges=False)
+        all_activities = {}
+        for app in constants.ACTIVITY_CHOICES:
+            all_activities.update(dict(app[1]))
         # Only need to check active users - ignore the inactive ones for now.
         for member in foundry_models.Member.objects.filter(pk__in=[activity.user.id for activity in latest_activities]):
-            for activity in dict(constants.ACTIVITY_CHOICES).keys():
+            for activity_id, activity_name in all_activities.iteritems():
                 # Step through all the badges a user is entitled to.
-                for badge in models.Badge.objects.filter(activity=activity, 
-                    threshold__lte=member.useractivity_set.filter(activity=activity).count()):
+                for badge in models.Badge.objects.filter(activity=activity_id, 
+                    threshold__lte=member.useractivity_set.filter(activity=activity_id).count()):
                     # Award member new badge, if not already in possession of it.
                     member_badge, created = models.MemberBadge.objects.get_or_create(member=member, 
                                                                                      badge=badge)
