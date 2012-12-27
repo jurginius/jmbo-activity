@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -20,7 +22,7 @@ ACTIVITY_SENT_MESSAGE = 15
 ACTIVITY_SOCIAL_SHARE = 16
 ACTIVITY_POLL_VOTE = 17
 
-ACTIVITY_CHOICES = (
+ACTIVITY_CHOICES = (('Jmbo', (
         (ACTIVITY_SIGNED_UP, _('Signed up')),
         (ACTIVITY_LOGGED_IN, _('Logged in')),
         (ACTIVITY_SENT_OFF_SITE_INVITE, _('Sent an off-site invite')),
@@ -40,3 +42,16 @@ ACTIVITY_CHOICES = (
         (ACTIVITY_SOCIAL_SHARE, _('Shared via social a network')),
         (ACTIVITY_POLL_VOTE, _('Voted in a poll')),
     )
+),)
+
+# add activity constants in other apps
+if hasattr(settings, 'ACTIVITY_APPS'):
+    vals = dict(ACTIVITY_CHOICES[0][1])
+    for app in settings.ACTIVITY_APPS:
+        module = __import__("%s.constants" % app)
+        module = getattr(module, "constants")
+        for ac in module.ACTIVITY_CHOICES:
+            if ac[0] in vals:
+                raise ValueError("(%d, %s) clashes with (%d, %s)" % (ac[0], unicode(ac[1]), ac[0], unicode(vals[ac[0]])))
+            vals[ac[0]] = ac[1]
+        ACTIVITY_CHOICES += ((app.capitalize(), module.ACTIVITY_CHOICES),)
