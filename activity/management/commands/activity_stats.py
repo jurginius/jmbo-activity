@@ -14,7 +14,8 @@ class Command(BaseCommand):
     Reports monthly activity stats
     """
     def handle(self, *args, **options):
-        activities = dict(constants.ACTIVITY_CHOICES)
+        activities = dict([(activity[0], unicode(activity[1]))
+            for activity in constants.ACTIVITY_CHOICES])
         months = UserActivity.objects.dates('created', 'month')
         for month in months:
             qs = UserActivity.objects.filter(created__gte=month).filter(
