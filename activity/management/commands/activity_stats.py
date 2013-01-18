@@ -16,8 +16,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         activities = {}
         for app in constants.ACTIVITY_CHOICES:
-            activities = dict(activities.items() +
-                [(activity[0], unicode(activity[1])) for activity in app[1]])
+            activities = dict(activities.items() + 
+                [(activity[0], "%s: %s" % 
+                    (app[0].upper(), unicode(activity[1])))
+                        for activity in app[1]])
         months = UserActivity.objects.dates('created', 'month')
         for month in months:
             qs = UserActivity.objects.filter(created__gte=month).filter(
