@@ -8,25 +8,29 @@ from datetime import date, timedelta
 from activity.models import UserActivity
 from foundry.models import Member
 
+DAYS = 30
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         # get members who are opted in to SMS but haven't logged in for 30 days
-        relevant_members = set(
-                [member.mobile_number for member in Member.objects.filter(
-                    receive_sms=True).exclude(
-                        last_login__gte=date.today() + timedelta(-30))])
+        relevant_members = Member.objects.filter(receive_sms=True).exclude(
+                last_login__gte=date.today() + timedelta(-DAYS))
         self.stderr.write('Opted in members: %u\n' % 
-                len(relevant_members))
+                relevant_members.count())
+        relevant_msisdns = [x[0] for x in relevant_members.values_list(
+            'mobile_number')]
 
-        activities_last30 = UserActivity.objects.filter(
-                created__gte=date.today() + timedelta(-30))
-        self.stderr.write('Activity records: %u\n' % len(activities_last30))
-        for a in activities_last30:
-            msisdn = a.user.member.mobile_number
-            if msisdn in relevant_members:
-                relevant_members.remove(msisdn)
+        # get activities in the last 30 days
+        recent_activities = UserActivity.objects.filter(
+                created__gte=date.today() + timedelta(-DAYS))
+        self.stderr.write('Activity records: %u\n' % recent_activities.count())
+        active_msisdns = [x[0] for x in recent_activities.values_list(
+            'user__member__mobile_number')]
+        for msisdn in active_msisdns:
+            if msisdn in relevant_msisdns:
+                relevant_msisdns.remove(msisdn)
 
-        self.stderr.write('Opted in inactive members: %u\n' % 
-                len(relevant_members))
-        for msisdn in list(relevant_members):
+        self.stderr.write('Opted in inactive msisdns: %u\n' % 
+                len(relevant_msisdns))
+        for msisdn in relevant_msisdns:
             print msisdn
