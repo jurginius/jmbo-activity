@@ -32,3 +32,10 @@ class Command(BaseCommand):
             l.sort()
             for activity in l:
                 self.stdout.write('\t%s: %u\n' % (activity[0], activity[1]))
+        self.stdout.write('TOTALS since site launch:\n')
+        qs = UserActivity.objects.all()
+        res = qs.values('activity').annotate(count=Count('activity'))
+        l = [(activities[x['activity']], x['count']) for x in res]
+        l.sort()
+        for activity in l:
+            self.stdout.write('\t%s: %u\n' % (activity[0], activity[1]))
