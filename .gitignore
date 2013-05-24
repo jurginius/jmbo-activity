@@ -2,3 +2,5 @@
 .pydevproject
 *.pyc
 *.pyo
+*.swp
+*.egg-info
