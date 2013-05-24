@@ -1,0 +1,117 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_modify adminmedia %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />
+{% endblock %}
+
+{% block extrahead %}
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="{% admin_media_prefix %}js/core.js"></script>
+<script type="text/javascript" src="{% admin_media_prefix %}js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="{% admin_media_prefix %}js/jquery.min.js"></script>
+<script type="text/javascript" src="{% admin_media_prefix %}js/jquery.init.js"></script>
+<script type="text/javascript" src="{% admin_media_prefix %}js/actions.min.js"></script>
+<script type="text/javascript" src="{% admin_media_prefix %}js/calendar.js"></script>
+<script type="text/javascript" src="{% admin_media_prefix %}js/admin/DateTimeShortcuts.js"></script>
+<script type="text/javascript" src="{% admin_media_prefix %}js/collapse.min.js"></script>
+<script type="text/javascript" src="{% admin_media_prefix %}js/inlines.min.js"></script>
+{% endblock %}
+
+{% block bodyclass %}activity-useractivity change-form{% endblock %}
+
+{% block breadcrumbs %}
+{% if not is_popup %}
+  <div class="breadcrumbs">
+       <a href="../../../">{% trans "Home" %}</a> &rsaquo;
+       <a href="../../">{% trans "Activity" %}</a> &rsaquo;
+       <a href="../">{% trans "User Activities" %}</a> &rsaquo;
+       {% trans "Activity Stats" %}
+  </div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+  <h1>{% trans "Activity Stats" %}</h1>
+  <div id="content-main">
+
+    {% block object-tools %}
+    {% endblock %}
+
+    <form action="" method="post" >
+      {% csrf_token %}
+      {% block form_top %}{% endblock %}
+      <div>
+
+        {% if form.errors %}
+            <p class="errornote">
+            {% blocktrans count form.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+            </p>
+            {{ form.non_field_errors }}
+        {% endif %}
+
+        <fieldset class="module aligned">
+          <h2>{% trans "User Activity Statistics - Selection Criteria" %}</h2>
+
+          <div class="form-row{% if form.activity.errors %} errors{% endif %}
+              {{form.activity.name}}">
+            {% if form.activity.errors %}{{ form.activity.errors }}{% endif %}
+            <div>
+              <label class="required" for="id_{{form.activity.label}}">{{form.activity.label}}:</label>
+              {{form.activity}}
+            </div>
+            {{ form.activity.help_text }}
+          </div>
+
+          <div class="form-row{% if form.date_range.errors %} errors{% endif %}
+              {{form.date_range.name}}">
+            {% if form.date_range.errors %}{{ form.date_range.errors }}{% endif %}
+            <div>
+              <label class="required" for="id_{{form.date_range.label}}">{{form.date_range.label}}:</label>
+              {{form.date_range}}
+            </div>
+            {{ form.date_range.help_text }}
+          </div>
+
+        </fieldset>
+
+        <div class="submit-row">
+          <input type="submit" value="{% trans "View Statistics" %}" class="default" name="_save" />
+        </div>
+
+      </div>
+    </form>
+
+  </div>
+
+    <div>
+      <fieldset class="module aligned">
+        <h2>{% trans "Most Participations in the Selected User Activity - Results for " %}
+          {{ month }}</h2>
+        <div class="form-row">
+          {% if stats %}
+          <table>
+            <tr>
+              <th> User Name </th>
+              <th> Full Name </th>
+              <th> Mobile Number </th>
+              <th> Total </th>
+            </tr>
+            {% for item in stats %}
+            <tr>
+              <td> {{ item.username }} </td>
+              <td> {{ item.fullname }} </td>
+              <td> {{ item.mobile }} </td>
+              <td> {{ item.total }} </td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% else %}
+          <p>No results for selected activity and date range.</p>
+          {% endif %}
+        </div>
+      </fieldset>
+    </div>
+{% endblock %}
+
+
