@@ -39,3 +39,12 @@ class Command(BaseCommand):
         l.sort()
         for activity in l:
             self.stdout.write('\t%s: %u\n' % (activity[0], activity[1]))
+
+        self.stdout.write('UNIQUE Users per activity since site launch:\n')
+        res = qs.values('activity').distinct()
+        l = [(activities[x['activity']], x['activity']) for x in res]
+        l.sort()
+        for activity in l:
+            uqs = UserActivity.objects.filter(activity=activity[1])
+            self.stdout.write('\t%s: %u\n' % (activities[activity[1]], 
+                                                uqs.values('user').distinct().count()))
