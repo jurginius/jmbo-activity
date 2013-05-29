@@ -1,21 +1,21 @@
 {% extends "admin/base_site.html" %}
-{% load i18n admin_modify adminmedia %}
+{% load i18n admin_modify admin_static %}
 
 {% block extrastyle %}
-<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />
 {% endblock %}
 
 {% block extrahead %}
-<script type="text/javascript" src="/admin/jsi18n/"></script>
-<script type="text/javascript" src="{% admin_media_prefix %}js/core.js"></script>
-<script type="text/javascript" src="{% admin_media_prefix %}js/admin/RelatedObjectLookups.js"></script>
-<script type="text/javascript" src="{% admin_media_prefix %}js/jquery.min.js"></script>
-<script type="text/javascript" src="{% admin_media_prefix %}js/jquery.init.js"></script>
-<script type="text/javascript" src="{% admin_media_prefix %}js/actions.min.js"></script>
-<script type="text/javascript" src="{% admin_media_prefix %}js/calendar.js"></script>
-<script type="text/javascript" src="{% admin_media_prefix %}js/admin/DateTimeShortcuts.js"></script>
-<script type="text/javascript" src="{% admin_media_prefix %}js/collapse.min.js"></script>
-<script type="text/javascript" src="{% admin_media_prefix %}js/inlines.min.js"></script>
+<script type="text/javascript" src="{% static "/admin/jsi18n/" %}"></script>
+<script type="text/javascript" src="{% static "admin/js/core.js" %}"></script>
+<script type="text/javascript" src="{% static "admin/js/admin/RelatedObjectLookups.js" %}"></script>
+<script type="text/javascript" src="{% static "admin/js/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "admin/js/jquery.init.js" %}"></script>
+<script type="text/javascript" src="{% static "admin/js/actions.min.js" %}"></script>
+<script type="text/javascript" src="{% static "admin/js/calendar.js" %}"></script>
+<script type="text/javascript" src="{% static "admin/js/admin/DateTimeShortcuts.js" %}"></script>
+<script type="text/javascript" src="{% static "admin/js/collapse.min.js" %}"></script>
+<script type="text/javascript" src="{% static "admin/js/inlines.min.js" %}"></script>
 {% endblock %}
 
 {% block bodyclass %}activity-useractivity change-form{% endblock %}
